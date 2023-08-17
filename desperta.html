@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Despertador em JavaScript</title>
+</head>
+<body>
+  <h1>Despertador em JavaScript</h1>
+  
+  <label for="alarmTime">Horário do despertador: </label>
+  <input type="time" id="alarmTime">
+  <button id="setAlarmButton">Definir Despertador</button>
+  <button id="cancelAlarmButton">Cancelar Despertador</button>
+
+  <script>
+    let alarmTimeout;
+
+    function setAlarm() {
+      const alarmTimeInput = document.getElementById('alarmTime');// Campo de entrada de texto, onde o usuário pode inserir um horário para definir um alarme.
+      const alarmTime = alarmTimeInput.value; //No contexto provavelmente associado a um campo de entrada, o .value é usado para obter o valor atual inserido pelo usuário.
+      const [hour, minute] = alarmTime.split(':'); // Divide o valor em horas e minutos
+
+      const now = new Date(); // Cria um objeto Date representando o momento de agora
+      const alarmDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute); // Cria um objeto Date com a hora do alarme definida
+
+      const timeUntilAlarm = alarmDate - now; // Calcula o tempo restante até o alarme
+
+      if (timeUntilAlarm <= 0) { // Se o tempo restante for menor ou igual a zero, o alarme já passou
+        alert("Hora do despertador!"); // Mostra um alerta indicando que é hora do alarme
+      } else {
+        alarmTimeout = setTimeout(() => { // Configura um temporizador para disparar quando o tempo restante chegar a zero
+          alert("Hora do despertador!"); // Mostra um alerta indicando que é hora do alarme
+        }, timeUntilAlarm);
+      }
+    }
+
+    function cancelAlarm() {
+      clearTimeout(alarmTimeout); // Cancela o temporizador do alarme, se existir um configurado
+      alert("Despertador cancelado."); // Mostra uma mensagem mostrando que o alarme foi cancelado
+    }
+
+    document.getElementById('setAlarmButton').addEventListener('click', setAlarm); // Associa a função setAlarm ao clique do botão "Set Alarm"
+    document.getElementById('cancelAlarmButton').addEventListener('click', cancelAlarm); // Associa a função cancelAlarm ao clique do botão "Cancel Alarm"
+</script>
+
+</body>
+</html>
